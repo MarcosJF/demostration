@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-sm-6 col-md-offset-3">
+  <h1 style="font-weight:bold;">Buscar restaurante</h1>
+  <form action='' method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-primary" type='submit' value='Buscar'/>
+    <a class="btn btn-success" href="{% url 'index' %}" type='submit'>Ir a inicio</a>
+  </form>
+  {% if messages %}
+  <div class="messages alert alert-danger">
+    {% for message in messages %}
+      <span class="{{ message.tags }}"><strong>{{ message }}</strong></li>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="tablaBusquedas">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="fondoFila">#</th>
+            <th class="fondoFila">ID</th>
+            <th class="fondoFila">Nombre</th>
+            <th class="fondoFila">Edificio</th>
+            <th class="fondoFila">Calle</th>
+            <th class="fondoFila">Código postal</th>
+            <th class="fondoFila">Barrio</th>
+            <th class="fondoFila">Tipo cocina</th>
+            <th class="fondoFila">Editar</th>
+          </tr>
+        </thead>
+        <tbody id="listaResultados">
+            {% for field in restaurantes %}
+            <tr>
+                <th><strong>{{ forloop.counter }}</strong></th>
+                <td>{{ field.restaurant_id }}</td>
+                <td>{{ field.name }}</td>
+                <td>{{ field.address.building }}</td>
+                <td>{{ field.address.street }}</td>
+                <td>{{ field.address.zipcode }}</td>
+                <td>{{ field.borough }}</td>
+                <td>{{ field.cuisine }}</td>
+                <td>
+                  <a class="editar" href="modificar_restaurante?id={{ field.restaurant_id }}&nombre={{ field.name }}&edificio={{ field.address.building }}&calle={{ field.address.street }}
+                  &cp={{ field.address.zipcode }}&barrio={{ field.borough }}&cocina={{ field.cuisine }}">
+                    <span><strong>Modificar</strong></span>
+                  </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

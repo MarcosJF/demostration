@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-sm-6 col-md-offset-3">
+  <h1 style="font-weight:bold;">Modificar restaurante</h1>
+  {% if messages %}
+  <div class="messages alert alert-success">
+    {% for message in messages %}
+      <span class="{{ message.tags }}"><strong>{{ message }}</strong></li>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <form action='' method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-primary" type='submit' value='Modificar'/>
+    <a class="btn btn-success" href="{% url 'index' %}" type='submit'>Ir a inicio</a>
+  </form>
+</div>
+{% endblock %}

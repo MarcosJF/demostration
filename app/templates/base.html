@@ -1,0 +1,58 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <title>{% block title %}Mi web{% endblock %}</title>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-theme.min.css' %}">
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+    <div id="header">
+      {% block header %}
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'index' %}">{% trans "Inicio" %}</a>
+          </div>
+          <ul class="nav navbar-nav">
+            {% if user.is_authenticated %}
+            <li>
+              <a href="#">
+                <span id="usuario">{{ user.username }}</span>
+              </a>
+            </li>
+            <li><a href="{% url 'auth_logout' %}">{% trans "Cerrar sesión" %}</a></li>
+            <li><a href="{% url 'auth_password_change' %}">{% trans "Cambiar contraseña" %}</a></li>
+            <li><a href="{% url 'insertar_restaurante' %}">{% trans "Insertar restaurante" %}</a></li>
+            <li><a href="{% url 'buscar_restaurante' %}">{% trans "Buscar restaurante" %}</a></li>
+            {% else %}
+            <li><a href="{% url 'auth_login' %}">{% trans "Iniciar sesión" %}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+      {% endblock %}
+    </div>
+
+    <div id="content">
+    {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        {% block footer %}
+        <span class="text-muted">Marcos Jiménez Fernández, prácticas Desarrollo de Aplicaciones para Internet.</span>
+        {% endblock %}
+      </div>
+    </footer>
+
+</body>
+</html>
