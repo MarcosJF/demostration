@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from pymongo import MongoClient
 from django.conf import settings
 from django.contrib.messages import constants as message_constants
 import dj_database_url
